@@ -1,6 +1,14 @@
 {
-    "TEST": {
+    "www.facebook.com": {
         "Email:": "example@email.com",
-        "Password": "6$5rZ$oorBor$Bz"
+        "Password:": "MGWAyyWMO#Ayo#O"
+    },
+    "hellokitty.com": {
+        "Email:": "example@email.com",
+        "Password:": "Ib*x7757x+1Yxb*"
+    },
+    "dota": {
+        "Email:": "example@email.com",
+        "Password:": "(L7+8e+(G86e7(8#+G"
     }
 }

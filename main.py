@@ -35,7 +35,7 @@ def add_to_file():
     new_data = {
         web_ent: {
             "Email:": user_ent,
-            "Password": pass_ent,
+            "Password:": pass_ent,
         }
     }
 
@@ -69,9 +69,27 @@ def add_to_file():
     else:
         messagebox.showerror(title="FIELDS EMPTY", message="You can not leave any fields empty, please fill all fields to continue to save.")
 
+#---------------------------PASSWORD FINDER----------------------------#
+def find_password():
+    website_login = web_entry.get()
+    try:
+        with open("data.json", "r") as file:
+            data = json.load(file)
 
-#Insert those inputs into data.txt file with spacing/formatting "|"
-#WHEN THE USER DOES THIS AGAIN MAKE SURE IT'S APPENDED ON A NEW LINE.
+        if website_login in data:
+            email = data[website_login]["Email:"]
+            password = data[website_login]["Password:"]
+            success = messagebox.showinfo(title="Login details found", message=f" Website: {website_login} \n Username: {email} \n Password: {password}")
+
+        else:
+            failure = messagebox.showerror(title="Error", message="You haven't added any credentials for this site.")
+    except FileNotFoundError:
+        not_found = messagebox.showerror(title="No entries", message="You haven't saved any entries to search yet.")
+
+
+
+
+
 
 # ---------------------------- UI SETUP ------------------------------- #
 #WINDOW CONTROL
@@ -85,16 +103,15 @@ canvas.grid(row=0, column=1)
 
 #THE LOGO
 logo = PhotoImage(file="logo.png")
-canvas.create_image(100, 100, image=logo)
+canvas.create_image(50, 100, image=logo)
 
 #-------------------------ON SCREEN ELEMENTS-----------------------------------------#
 #WEBSITE
 website = Label(text="Website:", bg="black", fg="green")
 website.grid(column=0, row=1)
 #WEB BOX
-web_entry = Entry(width=35)
-web_entry.focus()
-web_entry.grid(column=1, row=1, columnspan=2)
+web_entry = Entry(width=21)
+web_entry.grid(column=1, row=1, columnspan=2, sticky="w")
 
 #USERNAME / EMAIL
 username = Label(text="Email/Username:", bg="black", fg="green")
@@ -104,15 +121,20 @@ user_box = Entry(width=35)
 user_box.insert(0, "example@email.com")
 user_box.grid(column=1, row=2, columnspan=2)
 
+#SEARCH LABEL
+search_l = Button(text="Search", command=find_password)
+search_l.config(width=10)
+search_l.grid(column=1, row=1, sticky="e")
+
 #PASSWORD
 password = Label(text="Password:", bg="black", fg="green")
 password.grid(column=0, row=3)
 #PASS BOX
-pass_entry = Entry(width=35)
-pass_entry.grid(column=1, row=3)
+pass_entry = Entry(width=16)
+pass_entry.grid(column=1, row=3, sticky="w")
 #GENERATE BUTTON
 generate = Button(text="Generate Password", command=password_generator)
-generate.grid(column=3, row=3)
+generate.grid(column=1, row=3, sticky="e", padx=(102, 0))
 
 #ADD BUTTON
 add = Button(text="Add", width=29, command=add_to_file)
